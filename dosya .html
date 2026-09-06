@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1987/K-114 — Kayıp Şahıs Dosyası</title>
+<meta name="description" content="Bademli Jandarma Karakol Komutanlığı, kayıp şahıs dosyası. 12.02.1987.">
+<meta property="og:title" content="DOSYA 1987/K-114 — KAYIP ŞAHIS">
+<meta property="og:description" content="Maryam, 9. Kayalık istikametine giden ayak izlerine rastlanmıştır. Dönüş izi yoktur.">
+<meta property="og:image" content="gorseller/paylasim.jpg">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Grenze:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Karla:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --is:#0C0B10; --masa:#0F0D11;
+  --kagit:#DCD3BE; --kagit-2:#CFC5AE;
+  --murekkep:#20201E; --el:#243349;
+  --kan:#7A1F1A; --tunc:#B8873B; --cini:#2A8C86;
+  --sis:#7A7885; --kemik:#E6DFD1;
+  --disp:"Grenze",Georgia,serif;
+  --body:"Karla",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --yazi:"Caveat",cursive;
+  --gren:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+*,*::before,*::after{ box-sizing:border-box; }
+body{
+  margin:0; min-height:100svh; background:var(--masa); color:var(--kemik);
+  font-family:var(--body); font-weight:300; overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 50% 8%, rgba(184,135,59,.10), transparent 70%),
+    radial-gradient(ellipse at 50% 45%, rgba(20,18,24,.4), var(--is) 78%);
+}
+img{ max-width:100%; display:block; }
+button{ font:inherit; }
+:focus-visible{ outline:2px solid var(--tunc); outline-offset:3px; }
+
+#perde{
+  position:fixed; inset:0; z-index:200; background:var(--is);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:18px; text-align:center; padding:28px;
+}
+#perde .no{ font-family:var(--mono); font-size:12px; letter-spacing:.32em; color:var(--tunc); }
+#perde h1{
+  font-family:var(--disp); font-weight:500; font-size:clamp(30px,6vw,52px);
+  margin:0; letter-spacing:.04em; text-transform:uppercase;
+}
+#perde p{ color:var(--sis); max-width:46ch; margin:0; font-size:15px; line-height:1.7; }
+
+.dugme{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; padding:14px 28px; border:1px solid transparent;
+  background:none; cursor:pointer; line-height:1.2;
+  transition:background .25s,color .25s,border-color .25s;
+}
+.dugme.dolu{ background:var(--cini); color:var(--is); font-weight:500; border-color:var(--cini); }
+.dugme.dolu:hover{ background:var(--kemik); border-color:var(--kemik); }
+
+.masa{ min-height:100svh; display:flex; flex-direction:column; align-items:center; padding:26px 16px 120px; }
+.ust{
+  width:100%; max-width:920px; display:flex; align-items:center; gap:14px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--sis); margin-bottom:22px;
+}
+.ust a{ color:var(--sis); text-decoration:none; }
+.ust a:hover{ color:var(--tunc); }
+.ust .ayrac{ flex:1; height:1px; background:rgba(230,223,209,.10); }
+.dil{ display:flex; border:1px solid rgba(230,223,209,.14); }
+.dil button{
+  background:none; border:0; cursor:pointer; font-family:var(--mono); font-size:11px;
+  letter-spacing:.1em; color:var(--sis); padding:6px 11px; transition:background .25s,color .25s;
+}
+.dil button[aria-pressed="true"]{ background:rgba(27,78,75,.6); color:var(--kemik); }
+
+.klasor{ position:relative; width:100%; max-width:760px; aspect-ratio:1/1.32; perspective:2400px; }
+@media (min-width:760px){ .klasor{ aspect-ratio:1/1.24; } }
+
+.sayfa{
+  position:absolute; inset:0; transform-origin:left center; transform-style:preserve-3d;
+  transition:transform 1s cubic-bezier(.28,.06,.2,1); box-shadow:0 26px 60px rgba(0,0,0,.75);
+}
+.sayfa.cevrildi{ transform:rotateY(-174deg); }
+.yuz,.arka{ position:absolute; inset:0; backface-visibility:hidden; background:var(--kagit); overflow:hidden; }
+.arka{ transform:rotateY(180deg); background:var(--kagit-2); }
+.yuz::before,.arka::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:var(--gren); mix-blend-mode:multiply; opacity:.20;
+}
+.yuz::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 30% 22% at 82% 12%, rgba(120,86,40,.14), transparent 70%),
+    radial-gradient(ellipse 24% 16% at 12% 88%, rgba(120,86,40,.11), transparent 70%),
+    linear-gradient(105deg, rgba(0,0,0,.16) 0 3px, transparent 3px 100%),
+    linear-gradient(to right, rgba(0,0,0,.10), transparent 12%);
+}
+.icerik{
+  position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain;
+  padding:clamp(26px,5vw,52px) clamp(22px,5vw,54px) 74px;
+  color:var(--murekkep); font-family:var(--mono); font-size:13.5px; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.icerik::-webkit-scrollbar{ width:6px; }
+.icerik::-webkit-scrollbar-thumb{ background:rgba(32,32,30,.25); }
+.kose{ position:absolute; right:0; bottom:0; width:74px; height:74px; z-index:6; cursor:pointer; border:0; background:none; padding:0; }
+.kose::before{
+  content:""; position:absolute; right:0; bottom:0; width:100%; height:100%;
+  background:linear-gradient(315deg, rgba(0,0,0,.30) 0%, rgba(0,0,0,.10) 42%, transparent 44%);
+  transition:width .25s, height .25s;
+}
+.kose:hover::before{ width:120%; height:120%; }
+
+.antet{ text-align:center; border-bottom:1.5px solid rgba(32,32,30,.55); padding-bottom:14px; margin-bottom:22px; }
+.antet .kurum{ font-size:12px; letter-spacing:.22em; font-weight:600; }
+.antet .alt{ font-size:11px; letter-spacing:.16em; color:rgba(32,32,30,.62); margin-top:5px; }
+.alan{ display:grid; grid-template-columns:150px 1fr; gap:2px 12px; margin-bottom:4px; }
+.alan dt{ color:rgba(32,32,30,.60); letter-spacing:.08em; }
+.alan dd{ margin:0; border-bottom:1px dotted rgba(32,32,30,.35); }
+.ayir{ height:1px; background:rgba(32,32,30,.30); margin:20px 0; }
+.icerik p{ margin:0 0 14px; }
+.not{ border-left:2px solid rgba(122,31,26,.5); padding:6px 0 6px 14px; color:rgba(32,32,30,.75); font-size:12.5px; margin:18px 0; }
+.imza{ margin-top:26px; display:flex; justify-content:space-between; gap:20px; font-size:11.5px; letter-spacing:.1em; color:rgba(32,32,30,.7); }
+.imza-el{ font-family:var(--yazi); font-size:26px; color:var(--el); line-height:1; }
+.kase{
+  font-family:var(--mono); font-weight:600; border:2px solid rgba(122,31,26,.55);
+  color:rgba(122,31,26,.62); padding:7px 16px; font-size:13px; letter-spacing:.2em;
+  transform:rotate(-11deg); opacity:.85; pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(122,31,26,.28);
+}
+.elyazi{ font-family:var(--yazi); font-size:25px; line-height:1.5; color:var(--el); }
+.elyazi p{ margin:0 0 16px; }
+.cizgili{ background-image:repeating-linear-gradient(to bottom, transparent 0 37px, rgba(36,51,73,.16) 37px 38px); }
+
+.zarf{ font-size:11.5px; letter-spacing:.14em; color:rgba(32,32,30,.62); display:flex; justify-content:space-between; gap:14px; margin-bottom:14px; }
+.foto{
+  position:relative; aspect-ratio:4/3; background:#0a0a0c; overflow:hidden;
+  border:10px solid #efe9dc; box-shadow:0 8px 22px rgba(0,0,0,.5); cursor:none; touch-action:none;
+}
+.foto img,.foto .yedek{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(.42); }
+.foto .gizli{
+  position:absolute; inset:0; pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle var(--kr,86px) at var(--kx,50%) var(--ky,50%), #000 0 42%, rgba(0,0,0,.35) 66%, transparent 78%);
+  mask-image:radial-gradient(circle var(--kr,86px) at var(--kx,50%) var(--ky,50%), #000 0 42%, rgba(0,0,0,.35) 66%, transparent 78%);
+}
+.foto .isik{
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(circle var(--kr,86px) at var(--kx,50%) var(--ky,50%), rgba(242,208,138,.20) 0%, rgba(242,208,138,.06) 45%, transparent 70%);
+}
+.foto .kandil{
+  position:absolute; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
+  background:#F2D08A; box-shadow:0 0 16px 6px rgba(242,208,138,.5);
+  left:var(--kx,50%); top:var(--ky,50%); pointer-events:none; opacity:0; transition:opacity .3s;
+}
+.foto:hover .kandil,.foto.dokunuldu .kandil{ opacity:1; }
+.foto-alt{ font-size:12px; color:rgba(32,32,30,.7); margin-top:12px; }
+
+.kaset{ background:#1B1A1E; border:1px solid rgba(230,223,209,.14); padding:18px; color:var(--kemik); font-size:12px; letter-spacing:.1em; }
+.kaset-govde{ display:flex; align-items:center; gap:18px; margin-bottom:16px; }
+.makara{ width:58px; height:58px; flex:none; }
+.makara svg{ width:100%; height:100%; }
+.makara.doner svg{ animation:donus 3.2s linear infinite; }
+@keyframes donus{ to{ transform:rotate(360deg); } }
+.kaset-bant{ flex:1; height:1px; background:rgba(230,223,209,.2); }
+.kaset-kontrol{ display:flex; align-items:center; gap:14px; }
+.oynat{ width:44px; height:44px; flex:none; border:1px solid var(--tunc); background:none; color:var(--tunc); cursor:pointer; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.oynat:hover{ background:rgba(184,135,59,.12); }
+.surgu{ flex:1; height:3px; background:rgba(230,223,209,.16); position:relative; cursor:pointer; }
+.surgu i{ position:absolute; inset:0 auto 0 0; width:0%; background:var(--tunc); display:block; }
+.sure{ font-family:var(--mono); font-size:11px; color:var(--sis); min-width:42px; text-align:right; }
+.cozumleme{ margin-top:18px; border-top:1px solid rgba(32,32,30,.3); padding-top:14px; }
+.cozumleme h4{ font-size:11px; letter-spacing:.2em; margin:0 0 12px; color:rgba(32,32,30,.62); font-weight:600; }
+.satir{ display:grid; grid-template-columns:52px 1fr; gap:12px; font-size:12.5px; color:rgba(32,32,30,.35); margin-bottom:8px; transition:color .5s; }
+.satir.acik{ color:var(--murekkep); }
+.satir.kritik.acik{ color:var(--kan); font-weight:500; }
+.satir b{ font-weight:500; color:inherit; }
+
+.muhurlu{ text-align:center; }
+.muhurlu .mh{ width:132px; margin:6px auto 20px; }
+.muhurlu .mh circle,.muhurlu .mh path{ fill:none; stroke:var(--kan); stroke-width:1.4; }
+.muhurlu .mh .ic{ fill:rgba(122,31,26,.10); }
+.kilitler{ display:grid; gap:14px; max-width:360px; margin:0 auto; text-align:left; }
+.kilit label{ display:block; font-size:11.5px; letter-spacing:.1em; color:rgba(32,32,30,.68); margin-bottom:5px; }
+.kilit input{
+  width:100%; background:rgba(32,32,30,.06); border:1px solid rgba(32,32,30,.35);
+  color:var(--murekkep); font-family:var(--mono); font-size:15px; letter-spacing:.22em;
+  padding:11px 13px; text-transform:uppercase;
+}
+.kilit input:focus{ outline:none; border-color:var(--kan); background:rgba(122,31,26,.05); }
+.kilit.yanlis input{ border-color:var(--kan); animation:sars .4s; }
+.kilit.dogru input{ border-color:rgba(42,140,134,.8); background:rgba(42,140,134,.07); }
+@keyframes sars{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 60%{transform:translateX(4px)} }
+.muhur-dugme{
+  margin:20px auto 0; display:inline-flex; font-family:var(--mono); font-size:12px;
+  letter-spacing:.16em; text-transform:uppercase; padding:13px 26px;
+  border:1px solid var(--kan); color:var(--kan); background:none; cursor:pointer;
+}
+.muhur-dugme:hover{ background:rgba(122,31,26,.08); }
+.muhur-durum{ min-height:1.6em; margin-top:14px; font-size:12px; letter-spacing:.1em; color:var(--kan); }
+.acilan{ display:none; }
+.acildi .kapali{ display:none; }
+.acildi .acilan{ display:block; }
+.son-el{ font-family:var(--yazi); font-size:29px; color:var(--el); line-height:1.45; margin:24px 0 0; }
+.son-baglanti{ display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+.son-baglanti a{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; border:1px solid rgba(32,32,30,.4); color:var(--murekkep); padding:11px 18px;
+}
+.son-baglanti a:hover{ border-color:var(--kan); color:var(--kan); }
+
+.alt-cubuk{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  display:flex; align-items:center; justify-content:center; gap:18px;
+  padding:14px 20px; background:linear-gradient(to top, var(--is) 40%, transparent);
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--sis);
+}
+.alt-cubuk button{
+  background:none; border:1px solid rgba(230,223,209,.2); color:var(--kemik);
+  width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.alt-cubuk button:hover:not(:disabled){ border-color:var(--tunc); color:var(--tunc); }
+.alt-cubuk button:disabled{ opacity:.28; cursor:default; }
+.alt-cubuk .ad{ min-width:230px; text-align:center; color:var(--kemik); }
+
+@media (max-width:640px){
+  .icerik{ font-size:12.5px; }
+  .alan{ grid-template-columns:112px 1fr; }
+  .elyazi{ font-size:21px; }
+  .cizgili{ background-image:repeating-linear-gradient(to bottom,transparent 0 31px, rgba(36,51,73,.16) 31px 32px); }
+  .alt-cubuk .ad{ min-width:120px; font-size:10px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .sayfa{ transition:none; }
+  .makara.doner svg{ animation:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="perde">
+  <p class="no" id="perdeNo"></p>
+  <h1 id="perdeBaslik"></h1>
+  <p id="perdeMetin"></p>
+  <button class="dugme dolu" id="ac"></button>
+</div>
+
+<div class="masa">
+  <div class="ust">
+    <span>1987/K-114</span>
+    <span class="ayrac"></span>
+    <a href="index.html" id="geriBaglanti">← Khab-ir</a>
+    <span class="dil" role="group" aria-label="Dil / Language">
+      <button type="button" data-dil="tr" aria-pressed="true">TR</button>
+      <button type="button" data-dil="en" aria-pressed="false">EN</button>
+    </span>
+  </div>
+  <div class="klasor" id="klasor"></div>
+</div>
+
+<div class="alt-cubuk">
+  <button id="geri" aria-label="Geri">‹</button>
+  <span class="ad" id="sayfaAdi"></span>
+  <button id="ileri" aria-label="İleri">›</button>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var FOTO = "gorseller/dosya/kayalik.jpg";
+  var SES  = "gorseller/dosya/kayit.mp3";
+  var TOPLAM = 20;
+
+  /* Cevaplar her iki dilde de kabul edilir. */
+  var CEVAPLAR = [
+    ["0220", "220"],
+    ["5", "BEŞ", "BES", "FIVE"],
+    ["ALPER"]
+  ];
+
+  /* ====================================================================
+     İÇERİK — Türkçe ve İngilizce yan yana.
+     Bir metni değiştirirsen diğer dildekini de değiştir.
+  ==================================================================== */
+  var ICERIK = {
+    tr: {
+      perdeNo: "Bademli J. Krk. K.lığı · Dosya 1987/K-114",
+      perdeBaslik: "Kayıp Şahıs Dosyası",
+      perdeMetin: "Bu dosya Khab-ir adlı korku oyununun kurgusuna aittir; içindeki kişiler ve olaylar gerçek değildir. Ses kaydı için kulaklık tavsiye edilir.",
+      ac: "Dosyayı aç",
+      geriBaglanti: "← Khab-ir",
+      cozBaslik: "SES ÇÖZÜMLEME RAPORU",
+      muhurAc: "Mührü kaldır",
+      muhurHata: "Mühür kalkmadı. Dosyada eksik okuduğun bir yer var.",
+      kandilNot: "Kandili fotoğrafın üzerinde gezdirin.",
+      kilitler: [
+        { etiket: "Kızın evden çıktığı saat", yer: "00:00" },
+        { etiket: "Kayalıkta ayakta duran kişi sayısı", yer: "0" },
+        { etiket: "Kayıtta geçen isim", yer: "· · · · ·" }
+      ],
+      cozumleme: [
+        { t: 0,  s: "00:00", m: "Rüzgâr. Kayalık istikametinden sürekli uğultu." },
+        { t: 6,  s: "00:06", m: "Uzakta köpek sesi. Yaklaşık üç yüz metre." },
+        { t: 11, s: "00:11", m: "Köpek sesi kesiliyor. Kayıtta bir boşluk var." },
+        { t: 14, s: "00:14", m: "Erkek sesi, fısıltı: “Alper, çemberin dışına çık.”", kritik: true },
+        { t: 17, s: "00:17", m: "Kadın sesi, anlaşılmıyor. Ardından toprak sesi." },
+        { t: 19, s: "00:19", m: "Çocuk nefesi. Kayıt burada kesiliyor." }
+      ],
+      sayfalar: [
+        { ad: "Kapak", html:
+`<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between">
+  <div>
+    <div class="antet">
+      <div class="kurum">KARAKAYA JANDARMA KARAKOL KOMUTANLIĞI</div>
+      <div class="alt">KONYA İLİ · ASAYİŞ KISMI</div>
+    </div>
+    <p style="text-align:center;letter-spacing:.3em;font-size:12px;color:rgba(32,32,30,.6)">DOSYA NO 1987/K-114</p>
+  </div>
+  <div style="text-align:center">
+    <p style="font-size:12px;letter-spacing:.28em;color:rgba(32,32,30,.6);margin:0 0 10px">KAYIP ŞAHIS</p>
+    <p style="font-family:var(--disp);font-size:clamp(38px,9vw,72px);line-height:1;margin:0 0 8px">MARYAM</p>
+    <p style="margin:0;font-size:13px;letter-spacing:.2em">9 YAŞINDA · KARAKAYA KÖYÜ</p>
+    <p style="margin:16px 0 0;font-size:12px;color:rgba(32,32,30,.62)">KAYBOLMA TARİHİ 12 ŞUBAT 1987</p>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div style="font-size:11px;letter-spacing:.12em;color:rgba(32,32,30,.6)">EK: 2 İFADE · 2 DELİL ZARFI</div>
+    <div class="kase">KAPATILDI</div>
+  </div>
+</div>` },
+
+        { ad: "Kayıp bildirim tutanağı", html:
+`<div class="antet"><div class="kurum">KAYIP ŞAHIS BİLDİRİM TUTANAĞI</div>
+<div class="alt">12.02.1987 · SAAT 09:15</div></div>
+<dl class="alan">
+  <dt>ADI SOYADI</dt><dd>Maryam</dd>
+  <dt>YAŞI</dt><dd>9</dd>
+  <dt>BABASI</dt><dd>Osman</dd>
+  <dt>ANNESİ</dt><dd>Vefat (doğumda)</dd>
+  <dt>İHBAR EDEN</dt><dd>Serpil — üvey anne</dd>
+  <dt>SON GÖRÜLME</dt><dd>Sabah ezanından sonra, su almaya çıkarken (ihbar edenin beyanı)</dd>
+  <dt>EŞKAL</dt><dd>Kahverengi hırka, tek örgü saç, ayağında lastik çizme</dd>
+</dl>
+<div class="ayir"></div>
+<p>İhbar üzerine köy ve çevresinde üç gün süreyle arama yapılmıştır. Aramaya kırk kişilik ekip ve köy halkı katılmıştır. Dere yatağı, ağıllar ve terk edilmiş değirmen aranmış, netice alınamamıştır.</p>
+<p>Köyün kuzeyindeki kayalık mevkiine doğru giden ayak izlerine rastlanmıştır. İzler kar altında kalmış olup net değildir.</p>
+<p class="not">Kayalık istikametine giden izler tespit edilmiştir. Aynı istikametten dönüş izi yoktur.</p>
+<div class="imza"><span>DÜZENLEYEN<br>J. Onb. R. Yıldırım</span><span class="imza-el">R.Yıldırım</span></div>` },
+
+        { ad: "Osman'ın ifadesi", html:
+`<div class="zarf"><span>İFADE TUTANAĞI — 1</span><span>15.02.1987</span></div>
+<p style="font-size:11.5px;letter-spacing:.12em;color:rgba(32,32,30,.62);margin-bottom:18px">
+İFADE VEREN: OSMAN — KAYIP ŞAHSIN BABASI. İFADESİ KENDİ EL YAZISIYLA ALINMIŞTIR.</p>
+<div class="elyazi cizgili">
+  <p>Ben o gece yatsıyı kıldım, yattım. Köpeğim bahçede bağlıdır, yabancı görse ulur, kurt görse ulur.</p>
+  <p>O gece hiç ulumadı. Köpek susunca uyandım ben. Duvar saatine baktım, ikiyi yirmi geçiyordu.</p>
+  <p>Perdeyi araladım. Kayalık tarafında ışık vardı. Bir tane değildi. Rüzgârdır dedim, yattım. Keşke yatmasaydım.</p>
+  <p>Sabah kalktığımda kızımın çizmeleri kapının önünde duruyordu. Benim kızım bu kışta çizmesiz nereye gider?</p>
+  <p>Karım öldü, bir kızım kaldı. Onu da aldılar. Ben kimden isteyeceğim?</p>
+</div>
+<div class="imza"><span>İFADEYİ ALAN<br>J. Onb. R. Yıldırım</span><span class="imza-el">Osman</span></div>` },
+
+        { ad: "Serpil'in ifadesi", html:
+`<div class="zarf"><span>İFADE TUTANAĞI — 2</span><span>15.02.1987</span></div>
+<p style="font-size:11.5px;letter-spacing:.12em;color:rgba(32,32,30,.62);margin-bottom:18px">
+İFADE VEREN: SERPİL — KAYIP ŞAHSIN ÜVEY ANNESİ.</p>
+<p>“Sabah ezanıyla kalktı. Su almaya gidiyorum dedi, çıktı. Üstünde hırkası, ayağında çizmesi vardı. Bir daha da dönmedi.”</p>
+<p>“Gece hiçbir şey duymadım. Evden çıkmadım. Sabaha kadar yattım.”</p>
+<p>“Kızın yatağı sabah düzeltilmişti, kendi düzeltmiştir. Zaten uslu kızdı, bana hiç yük olmadı.”</p>
+<p>“Büyücü Münire’yi tanımam. Kimse de tanımaz burada. Ne işim olur benim onunla?”</p>
+<div class="ayir"></div>
+<p class="not">DÜŞÜLEN ŞERH: İfade veren, kendisine sorulmadığı halde köyde tılsımla iştigal eden bir şahsın ismini vermiştir. Ayrıca kayıp şahsın ayakkabısına dair beyanı, babanın ifadesiyle çelişmektedir. Konu üzerinde durulması gerekirken dosya kapatılmıştır.</p>
+<div class="imza"><span>İFADEYİ ALAN<br>J. Onb. R. Yıldırım</span><span class="imza-el">Serpil</span></div>` },
+
+        { ad: "Delil zarfı 3 — fotoğraf", html:
+`<div class="zarf"><span>DELİL ZARFI 3</span><span>14.02.1987</span></div>
+<p style="margin-bottom:14px">Kayalık mevkiinde, kaybolmadan iki gün sonra çekilmiştir. Fotoğraf yeterince aydınlık değildir; ışığa tutulduğunda negatifte kalan izler görülmektedir.</p>
+<div class="foto" id="foto">
+  <img src="${FOTO}" alt="" id="fotoGorsel">
+  <div class="gizli" id="fotoGizli"></div>
+  <div class="isik"></div>
+  <div class="kandil"></div>
+</div>
+<p class="foto-alt" id="kandilNot"></p>` },
+
+        { ad: "Delil zarfı 7 — ses kaydı", html:
+`<div class="zarf"><span>DELİL ZARFI 7</span><span>20 SANİYE</span></div>
+<p style="margin-bottom:16px">Kayalık mevkiinde bulunan teyp kaseti. Kaydın kime ait olduğu tespit edilememiştir.</p>
+<div class="kaset">
+  <div class="kaset-govde">
+    <div class="makara" id="mk1"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#4A4750"/><circle cx="30" cy="30" r="9" fill="none" stroke="#B8873B"/><path d="M30 21 V4 M30 39 V56 M21 30 H4 M39 30 H56" stroke="#4A4750"/></svg></div>
+    <div class="kaset-bant"></div>
+    <div class="makara" id="mk2"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#4A4750"/><circle cx="30" cy="30" r="9" fill="none" stroke="#B8873B"/><path d="M30 21 V4 M30 39 V56 M21 30 H4 M39 30 H56" stroke="#4A4750"/></svg></div>
+  </div>
+  <div class="kaset-kontrol">
+    <button class="oynat" id="oynat" aria-label="Çal">▶</button>
+    <span class="surgu" id="surgu"><i></i></span>
+    <span class="sure" id="sure">0:00</span>
+  </div>
+</div>
+<div class="cozumleme"><h4 id="cozBaslik"></h4><div id="satirlar"></div></div>` },
+
+        { ad: "Mühürlü sayfa", html:
+`<div id="sonSayfa">
+  <div class="kapali muhurlu">
+    <svg class="mh" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="ic" cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="42"/>
+      <path d="M60 18 L98 60 L60 102 L22 60 Z"/><path d="M60 34 L84 60 L60 86 L36 60 Z"/>
+      <path d="M60 50 v20 M50 60 h20"/></svg>
+    <p style="margin-bottom:6px">Bu sayfa mühürlüdür.</p>
+    <p style="color:rgba(32,32,30,.66);font-size:12.5px;margin-bottom:24px">Dosyanın tamamını okuyan biri üç şeyi bilir.</p>
+    <div class="kilitler" id="kilitler"></div>
+    <button class="muhur-dugme" id="muhurAc"></button>
+    <p class="muhur-durum" id="muhurDurum" role="status" aria-live="polite"></p>
+  </div>
+  <div class="acilan">
+    <div class="zarf"><span>EK — DOSYAYA KONULMAMIŞTIR</span><span>03.03.1987</span></div>
+    <p>Dosya, delil yetersizliğinden kapatılmıştır. Aşağıdaki not evrak arasına konulmamış, tutanak defterinin arkasında bulunmuştur.</p>
+    <div class="ayir"></div>
+    <p>“Fotoğrafı ışığa tuttum. Kayalıkta beş kişi duruyor. İfadelerde dört isim var. Beşincisi kayıtta geçiyor; şehirden gelen adam.</p>
+    <p>Kayalıkta ikinci bir kazı yapılmasını istedim. İzin çıkmadı. Bugün dosyayı kapatmam söylendi.</p>
+    <p>Ben o kızın kayalıkta olduğunu biliyorum. Bilmek yetmiyor.”</p>
+    <div class="imza"><span>J. ONB. R. YILDIRIM</span><span class="imza-el">R.Yıldırım</span></div>
+    <div class="ayir"></div>
+    <p class="son-el">Kazıyı ben yaptım.<br>Bulduğum şey toprakta değildi.</p>
+    <div class="son-baglanti">
+      <a href="https://www.instagram.com/rudygamesofficial/" target="_blank" rel="noopener">Instagram'da takip et</a>
+      <a href="index.html">Khab-ir</a>
+    </div>
+  </div>
+</div>` }
+      ]
+    },
+
+    en: {
+      perdeNo: "Bademli Gendarmerie Station · File 1987/K-114",
+      perdeBaslik: "Missing Person File",
+      perdeMetin: "This file belongs to the fiction of the horror game Khab-ir; the people and events in it are not real. Headphones are recommended for the tape.",
+      ac: "Open the file",
+      geriBaglanti: "← Khab-ir",
+      cozBaslik: "AUDIO ANALYSIS REPORT",
+      muhurAc: "Break the seal",
+      muhurHata: "The seal holds. Something in the file has gone unread.",
+      kandilNot: "Move the lamp across the photograph.",
+      kilitler: [
+        { etiket: "Time the girl left the house", yer: "00:00" },
+        { etiket: "People standing at the rocks", yer: "0" },
+        { etiket: "Name heard on the recording", yer: "· · · · ·" }
+      ],
+      cozumleme: [
+        { t: 0,  s: "00:00", m: "Wind. A continuous drone from the direction of the rocks." },
+        { t: 6,  s: "00:06", m: "A dog, distant. Approximately three hundred metres." },
+        { t: 11, s: "00:11", m: "The dog stops. There is a gap in the recording." },
+        { t: 14, s: "00:14", m: "Male voice, whispered: “Alper, step outside the circle.”", kritik: true },
+        { t: 17, s: "00:17", m: "Female voice, indistinct. Then the sound of soil." },
+        { t: 19, s: "00:19", m: "A child breathing. The recording ends here." }
+      ],
+      sayfalar: [
+        { ad: "Cover", html:
+`<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between">
+  <div>
+    <div class="antet">
+      <div class="kurum">BADEMLİ GENDARMERIE STATION COMMAND</div>
+      <div class="alt">PROVINCE OF KONYA · PUBLIC ORDER SECTION</div>
+    </div>
+    <p style="text-align:center;letter-spacing:.3em;font-size:12px;color:rgba(32,32,30,.6)">FILE NO 1987/K-114</p>
+  </div>
+  <div style="text-align:center">
+    <p style="font-size:12px;letter-spacing:.28em;color:rgba(32,32,30,.6);margin:0 0 10px">MISSING PERSON</p>
+    <p style="font-family:var(--disp);font-size:clamp(38px,9vw,72px);line-height:1;margin:0 0 8px">MARYAM</p>
+    <p style="margin:0;font-size:13px;letter-spacing:.2em">AGE 9 · VILLAGE OF BADEMLİ</p>
+    <p style="margin:16px 0 0;font-size:12px;color:rgba(32,32,30,.62)">DATE OF DISAPPEARANCE 12 FEBRUARY 1987</p>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div style="font-size:11px;letter-spacing:.12em;color:rgba(32,32,30,.6)">ENCL: 2 STATEMENTS · 2 EVIDENCE ENVELOPES</div>
+    <div class="kase">CLOSED</div>
+  </div>
+</div>` },
+
+        { ad: "Missing person report", html:
+`<div class="antet"><div class="kurum">MISSING PERSON REPORT</div>
+<div class="alt">12.02.1987 · 09:15 HOURS</div></div>
+<dl class="alan">
+  <dt>NAME</dt><dd>Maryam</dd>
+  <dt>AGE</dt><dd>9</dd>
+  <dt>FATHER</dt><dd>Osman</dd>
+  <dt>MOTHER</dt><dd>Deceased (in childbirth)</dd>
+  <dt>REPORTED BY</dt><dd>Serpil — stepmother</dd>
+  <dt>LAST SEEN</dt><dd>After the morning call to prayer, leaving to fetch water (per the reporting party)</dd>
+  <dt>DESCRIPTION</dt><dd>Brown cardigan, hair in a single braid, rubber boots</dd>
+</dl>
+<div class="ayir"></div>
+<p>A search of the village and its surroundings was carried out over three days. Forty personnel and the villagers took part. The stream bed, the sheepfolds and the abandoned mill were searched without result.</p>
+<p>Footprints leading towards the rocks north of the village were found. The prints are unclear, having been covered by snow.</p>
+<p class="not">Prints leading towards the rocks have been identified. There are no prints returning from that direction.</p>
+<div class="imza"><span>FILED BY<br>Cpl. R. Yıldırım</span><span class="imza-el">R.Yıldırım</span></div>` },
+
+        { ad: "Statement of Osman", html:
+`<div class="zarf"><span>STATEMENT — 1</span><span>15.02.1987</span></div>
+<p style="font-size:11.5px;letter-spacing:.12em;color:rgba(32,32,30,.62);margin-bottom:18px">
+DEPONENT: OSMAN — FATHER OF THE MISSING CHILD. WRITTEN IN HIS OWN HAND.</p>
+<div class="elyazi cizgili">
+  <p>That night I said my prayers and went to bed. My dog is tied up in the yard. He howls at a stranger, he howls at a wolf.</p>
+  <p>That night he never howled. I woke when the dog went quiet. I looked at the wall clock. It was twenty past two.</p>
+  <p>I opened the curtain. There was light over by the rocks. Not one light. It is the wind, I said, and lay down again. I wish I had not.</p>
+  <p>In the morning my girl's boots were standing by the door. Where does my girl go in this winter without her boots?</p>
+  <p>My wife died and I had one daughter left. They took her too. Who am I to ask?</p>
+</div>
+<div class="imza"><span>TAKEN BY<br>Cpl. R. Yıldırım</span><span class="imza-el">Osman</span></div>` },
+
+        { ad: "Statement of Serpil", html:
+`<div class="zarf"><span>STATEMENT — 2</span><span>15.02.1987</span></div>
+<p style="font-size:11.5px;letter-spacing:.12em;color:rgba(32,32,30,.62);margin-bottom:18px">
+DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
+<p>“She got up with the morning call to prayer. She said she was going for water, and left. She had her cardigan on and her boots on her feet. She never came back.”</p>
+<p>“I heard nothing in the night. I did not leave the house. I slept until morning.”</p>
+<p>“Her bed was made in the morning; she must have made it herself. She was a quiet girl, never a burden to me.”</p>
+<p>“I do not know the sorceress Münire. Nobody here knows her. What business would I have with her?”</p>
+<div class="ayir"></div>
+<p class="not">NOTE ENTERED: Although not asked, the deponent volunteered the name of a person in the village known to deal in talismans. Her statement regarding the child's footwear also contradicts the father's. The matter warranted further inquiry; the file was nonetheless closed.</p>
+<div class="imza"><span>TAKEN BY<br>Cpl. R. Yıldırım</span><span class="imza-el">Serpil</span></div>` },
+
+        { ad: "Evidence 3 — photograph", html:
+`<div class="zarf"><span>EVIDENCE ENVELOPE 3</span><span>14.02.1987</span></div>
+<p style="margin-bottom:14px">Taken at the rocks, two days after the disappearance. The photograph is underexposed; marks left on the negative become visible when it is held up to a light.</p>
+<div class="foto" id="foto">
+  <img src="${FOTO}" alt="" id="fotoGorsel">
+  <div class="gizli" id="fotoGizli"></div>
+  <div class="isik"></div>
+  <div class="kandil"></div>
+</div>
+<p class="foto-alt" id="kandilNot"></p>` },
+
+        { ad: "Evidence 7 — tape", html:
+`<div class="zarf"><span>EVIDENCE ENVELOPE 7</span><span>20 SECONDS</span></div>
+<p style="margin-bottom:16px">Cassette tape recovered at the rocks. It has not been established whose recording this is.</p>
+<div class="kaset">
+  <div class="kaset-govde">
+    <div class="makara" id="mk1"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#4A4750"/><circle cx="30" cy="30" r="9" fill="none" stroke="#B8873B"/><path d="M30 21 V4 M30 39 V56 M21 30 H4 M39 30 H56" stroke="#4A4750"/></svg></div>
+    <div class="kaset-bant"></div>
+    <div class="makara" id="mk2"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#4A4750"/><circle cx="30" cy="30" r="9" fill="none" stroke="#B8873B"/><path d="M30 21 V4 M30 39 V56 M21 30 H4 M39 30 H56" stroke="#4A4750"/></svg></div>
+  </div>
+  <div class="kaset-kontrol">
+    <button class="oynat" id="oynat" aria-label="Play">▶</button>
+    <span class="surgu" id="surgu"><i></i></span>
+    <span class="sure" id="sure">0:00</span>
+  </div>
+</div>
+<div class="cozumleme"><h4 id="cozBaslik"></h4><div id="satirlar"></div></div>` },
+
+        { ad: "Sealed page", html:
+`<div id="sonSayfa">
+  <div class="kapali muhurlu">
+    <svg class="mh" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="ic" cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="42"/>
+      <path d="M60 18 L98 60 L60 102 L22 60 Z"/><path d="M60 34 L84 60 L60 86 L36 60 Z"/>
+      <path d="M60 50 v20 M50 60 h20"/></svg>
+    <p style="margin-bottom:6px">This page is sealed.</p>
+    <p style="color:rgba(32,32,30,.66);font-size:12.5px;margin-bottom:24px">Whoever has read the whole file knows three things.</p>
+    <div class="kilitler" id="kilitler"></div>
+    <button class="muhur-dugme" id="muhurAc"></button>
+    <p class="muhur-durum" id="muhurDurum" role="status" aria-live="polite"></p>
+  </div>
+  <div class="acilan">
+    <div class="zarf"><span>ENCLOSURE — NOT FILED</span><span>03.03.1987</span></div>
+    <p>The file was closed for want of evidence. The note below was never placed among the papers; it was found at the back of the station register.</p>
+    <div class="ayir"></div>
+    <p>“I held the photograph up to the light. There are five people standing at the rocks. The statements give four names. The fifth is on the tape; the man who came from the city.</p>
+    <p>I asked for a second dig at the rocks. Permission did not come. Today I was told to close the file.</p>
+    <p>I know that girl is up at the rocks. Knowing is not enough.”</p>
+    <div class="imza"><span>CPL. R. YILDIRIM</span><span class="imza-el">R.Yıldırım</span></div>
+    <div class="ayir"></div>
+    <p class="son-el">I made that dig myself.<br>What I found was not in the soil.</p>
+    <div class="son-baglanti">
+      <a href="https://www.instagram.com/rudygamesofficial/" target="_blank" rel="noopener">Follow on Instagram</a>
+      <a href="index.html">Khab-ir</a>
+    </div>
+  </div>
+</div>` }
+      ]
+    }
+  };
+
+  /* ---------------- dil ---------------- */
+  function baslangicDili() {
+    var p = new URLSearchParams(location.search).get("lang");
+    if (p === "en" || p === "tr") return p;
+    try {
+      var k = localStorage.getItem("khabir-dil");
+      if (k === "en" || k === "tr") return k;
+    } catch (e) {}
+    return (navigator.language || "").toLowerCase().indexOf("tr") === 0 ? "tr" : "en";
+  }
+
+  var dil = baslangicDili();
+  var aktif = 0;
+  var acikMi = false;
+  try { acikMi = localStorage.getItem("khabir-dosya") === "acik"; } catch (e) {}
+
+  var klasor = document.getElementById("klasor");
+  var elAd = document.getElementById("sayfaAdi");
+  var btnGeri = document.getElementById("geri");
+  var btnIleri = document.getElementById("ileri");
+  var sayfalar = [];
+  var ses = null, sesVar = true, calisiyor = false, an = 0, sonT = 0;
+
+  function I() { return ICERIK[dil]; }
+
+  function kur() {
+    if (ses) ses.pause();
+    calisiyor = false; an = 0;
+
+    klasor.innerHTML = "";
+    var liste = I().sayfalar;
+    liste.forEach(function (s, i) {
+      var d = document.createElement("div");
+      d.className = "sayfa";
+      d.innerHTML =
+        '<div class="yuz"><div class="icerik">' + s.html + "</div>" +
+        (i < liste.length - 1 ? '<button class="kose" aria-label="→"></button>' : "") +
+        '</div><div class="arka"></div>';
+      klasor.appendChild(d);
+    });
+    sayfalar = Array.prototype.slice.call(klasor.querySelectorAll(".sayfa"));
+
+    document.documentElement.lang = dil;
+    document.getElementById("perdeNo").textContent = I().perdeNo;
+    document.getElementById("perdeBaslik").textContent = I().perdeBaslik;
+    document.getElementById("perdeMetin").textContent = I().perdeMetin;
+    document.getElementById("ac").textContent = I().ac;
+    document.getElementById("geriBaglanti").textContent = I().geriBaglanti;
+    document.getElementById("kandilNot").textContent = I().kandilNot;
+    document.getElementById("cozBaslik").textContent = I().cozBaslik;
+    document.getElementById("muhurAc").textContent = I().muhurAc;
+    Array.prototype.forEach.call(document.querySelectorAll(".dil button"), function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-dil") === dil ? "true" : "false");
+    });
+
+    fotoKur();
+    kasetKur();
+    muhurKur();
+    diz();
+  }
+
+  function diz() {
+    sayfalar.forEach(function (s, i) {
+      var cevrildi = i < aktif;
+      s.classList.toggle("cevrildi", cevrildi);
+      s.style.zIndex = cevrildi ? i : (sayfalar.length - i);
+      s.setAttribute("aria-hidden", i === aktif ? "false" : "true");
+    });
+    elAd.textContent = I().sayfalar[aktif].ad;
+    btnGeri.disabled = aktif === 0;
+    btnIleri.disabled = aktif === sayfalar.length - 1;
+    var ic = sayfalar[aktif].querySelector(".icerik");
+    if (ic) ic.scrollTop = 0;
+  }
+  function git(n) { aktif = Math.min(sayfalar.length - 1, Math.max(0, n)); diz(); }
+
+  /* ---------------- fotoğraf ---------------- */
+  function fotoKur() {
+    var gizli = document.getElementById("fotoGizli");
+    gizli.innerHTML =
+      '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">' +
+        '<g stroke="rgba(236,228,205,.72)" fill="none" stroke-width="1.1">' +
+          '<ellipse cx="200" cy="205" rx="104" ry="34"/><ellipse cx="200" cy="205" rx="86" ry="27"/>' +
+          '<path d="M200 171 L245 205 L200 239 L155 205 Z"/><path d="M186 205 h28 M200 191 v28"/>' +
+        "</g>" +
+        '<g fill="rgba(236,228,205,.60)">' +
+          '<g transform="translate(96,150)"><circle cx="0" cy="0" r="7"/><path d="M-8 10 q8 -6 16 0 l3 44 h-22 z"/></g>' +
+          '<g transform="translate(148,138)"><circle cx="0" cy="0" r="7"/><path d="M-8 10 q8 -6 16 0 l3 46 h-22 z"/></g>' +
+          '<g transform="translate(252,136)"><circle cx="0" cy="0" r="7"/><path d="M-8 10 q8 -6 16 0 l3 46 h-22 z"/></g>' +
+          '<g transform="translate(300,150)"><circle cx="0" cy="0" r="7"/><path d="M-8 10 q8 -6 16 0 l3 44 h-22 z"/></g>' +
+          '<g transform="translate(200,124)" opacity=".85"><circle cx="0" cy="0" r="7"/><path d="M-8 10 q8 -6 16 0 l3 48 h-22 z"/></g>' +
+        "</g>" +
+        '<g fill="rgba(236,228,205,.34)"><ellipse cx="200" cy="212" rx="19" ry="7"/></g>' +
+      "</svg>";
+
+    var foto = document.getElementById("foto");
+    function konum(e) {
+      var k = foto.getBoundingClientRect();
+      foto.style.setProperty("--kx", Math.max(0, Math.min(100, ((e.clientX - k.left) / k.width) * 100)) + "%");
+      foto.style.setProperty("--ky", Math.max(0, Math.min(100, ((e.clientY - k.top) / k.height) * 100)) + "%");
+    }
+    foto.addEventListener("pointermove", konum);
+    foto.addEventListener("pointerdown", function (e) { foto.classList.add("dokunuldu"); konum(e); });
+    foto.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+
+    document.getElementById("fotoGorsel").addEventListener("error", function () {
+      this.style.display = "none";
+      var y = document.createElement("div");
+      y.className = "yedek";
+      y.innerHTML =
+        '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%">' +
+          '<rect width="400" height="300" fill="#111114"/><circle cx="322" cy="52" r="17" fill="#2A2A31"/>' +
+          '<path d="M0 214 L58 176 L104 206 L150 158 L214 202 L268 166 L330 208 L400 178 L400 300 L0 300 Z" fill="#191920"/>' +
+          '<path d="M120 300 L152 214 L188 300 Z" fill="#101014"/><path d="M232 300 L262 224 L292 300 Z" fill="#101014"/>' +
+        "</svg>";
+      foto.insertBefore(y, document.getElementById("fotoGizli"));
+    });
+  }
+
+  /* ---------------- kaset ---------------- */
+  function kasetKur() {
+    var coz = I().cozumleme;
+    var kutu = document.getElementById("satirlar");
+    kutu.innerHTML = coz.map(function (c, i) {
+      return '<div class="satir' + (c.kritik ? " kritik" : "") + '" data-i="' + i + '">' +
+             "<b>" + c.s + "</b><span>" + c.m + "</span></div>";
+    }).join("");
+    var satirlar = kutu.querySelectorAll(".satir");
+
+    if (!ses) {
+      ses = new Audio(SES);
+      ses.preload = "auto";
+      ses.addEventListener("error", function () { sesVar = false; });
+    }
+
+    var oynat = document.getElementById("oynat");
+    var surgu = document.getElementById("surgu");
+    var dolgu = surgu.querySelector("i");
+    var elSure = document.getElementById("sure");
+    var mk1 = document.getElementById("mk1"), mk2 = document.getElementById("mk2");
+
+    function guncelle() {
+      dolgu.style.width = (Math.min(1, an / TOPLAM) * 100) + "%";
+      var sn = Math.floor(an % 60);
+      elSure.textContent = Math.floor(an / 60) + ":" + (sn < 10 ? "0" : "") + sn;
+      satirlar.forEach(function (el, i) { el.classList.toggle("acik", an >= coz[i].t); });
+    }
+    function tik(z) {
+      if (!calisiyor) return;
+      if (sesVar) { an = ses.currentTime; }
+      else { an += sonT ? (z - sonT) / 1000 : 0; sonT = z; }
+      if (an >= TOPLAM) { an = TOPLAM; dur(); guncelle(); return; }
+      guncelle();
+      requestAnimationFrame(tik);
+    }
+    function cal() {
+      if (an >= TOPLAM) an = 0;
+      calisiyor = true; sonT = 0;
+      oynat.textContent = "❚❚";
+      mk1.classList.add("doner"); mk2.classList.add("doner");
+      if (sesVar) { ses.currentTime = an; ses.play().catch(function () { sesVar = false; }); }
+      requestAnimationFrame(tik);
+    }
+    function dur() {
+      calisiyor = false;
+      oynat.textContent = "▶";
+      mk1.classList.remove("doner"); mk2.classList.remove("doner");
+      if (sesVar) ses.pause();
+    }
+    oynat.addEventListener("click", function () { calisiyor ? dur() : cal(); });
+    surgu.addEventListener("click", function (e) {
+      var k = surgu.getBoundingClientRect();
+      an = Math.max(0, Math.min(TOPLAM, ((e.clientX - k.left) / k.width) * TOPLAM));
+      if (sesVar) ses.currentTime = an;
+      guncelle();
+    });
+    guncelle();
+  }
+
+  /* ---------------- mühür ---------------- */
+  function sadelestir(s) {
+    s = (s || "").replace(/ı/g, "I").replace(/i/g, "İ").toUpperCase();
+    return s.replace(/[^A-ZÇĞİÖŞÜ0-9]/g, "");
+  }
+  function muhurKur() {
+    var kutu = document.getElementById("kilitler");
+    kutu.innerHTML = I().kilitler.map(function (k, i) {
+      return '<div class="kilit" data-i="' + i + '"><label for="kl' + i + '">' + k.etiket + "</label>" +
+             '<input id="kl' + i + '" type="text" autocomplete="off" spellcheck="false" placeholder="' + k.yer + '"></div>';
+    }).join("");
+
+    var son = document.getElementById("sonSayfa");
+    var durum = document.getElementById("muhurDurum");
+    if (acikMi) son.classList.add("acildi");
+
+    document.getElementById("muhurAc").addEventListener("click", function () {
+      var hepsi = true;
+      CEVAPLAR.forEach(function (dogrular, i) {
+        var k = kutu.querySelector('.kilit[data-i="' + i + '"]');
+        var deger = sadelestir(k.querySelector("input").value);
+        var dogru = dogrular.indexOf(deger) !== -1;
+        k.classList.toggle("dogru", dogru);
+        k.classList.remove("yanlis");
+        if (!dogru) { hepsi = false; if (deger) k.classList.add("yanlis"); }
+      });
+      if (hepsi) {
+        durum.textContent = "";
+        son.classList.add("acildi");
+        acikMi = true;
+        try { localStorage.setItem("khabir-dosya", "acik"); } catch (e) {}
+      } else {
+        durum.textContent = I().muhurHata;
+      }
+    });
+  }
+
+  /* ---------------- olaylar ---------------- */
+  klasor.addEventListener("click", function (e) {
+    if (e.target.classList.contains("kose")) git(aktif + 1);
+  });
+  btnIleri.addEventListener("click", function () { git(aktif + 1); });
+  btnGeri.addEventListener("click", function () { git(aktif - 1); });
+  document.addEventListener("keydown", function (e) {
+    if (e.target.tagName === "INPUT") return;
+    if (e.key === "ArrowRight") git(aktif + 1);
+    if (e.key === "ArrowLeft") git(aktif - 1);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".dil button"), function (b) {
+    b.addEventListener("click", function () {
+      var yeni = b.getAttribute("data-dil");
+      if (yeni === dil) return;
+      dil = yeni;
+      try { localStorage.setItem("khabir-dil", dil); } catch (e) {}
+      kur();
+    });
+  });
+  document.getElementById("ac").addEventListener("click", function () {
+    var p = document.getElementById("perde");
+    p.style.transition = "opacity .6s ease";
+    p.style.opacity = "0";
+    setTimeout(function () { p.remove(); }, 600);
+  });
+
+  kur();
+})();
+</script>
+</body>
+</html>

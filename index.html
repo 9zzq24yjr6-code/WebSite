@@ -1326,6 +1326,13 @@ body{margin:0;background:var(--is);color:var(--kemik);font-family:var(--body);
   </div>
 </section>
 
+<section class="bolum gel" style="padding-top:0;text-align:center">
+  <a href="dosya.html"
+     style="font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--sis);text-decoration:none;border-bottom:1px solid rgba(230,223,209,.14);padding-bottom:7px"
+     data-tr="1987'de kapatılmış bir dosya var."
+     data-en="There is a file that was closed in 1987.">1987'de kapatılmış bir dosya var.</a>
+</section>
+
 <section class="bolum takip gel" id="takip">
   <div class="kas">
     <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true">
@@ -1411,6 +1418,11 @@ function dilSec(dil){
   document.documentElement.lang = dil;
   document.querySelectorAll('[data-tr]').forEach(el => {
     if (el.id === 'muzik-metin') return;
+
+function dilSec(dil){
+  try { localStorage.setItem('khabir-dil', dil); } catch(e){}
+  document.documentElement.lang = dil;
+  ...
 
     const metin = el.dataset[dil];
     if (!metin) return;
