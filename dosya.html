@@ -226,12 +226,28 @@ button{ font:inherit; }
 .alt-cubuk button:disabled{ opacity:.28; cursor:default; }
 .alt-cubuk .ad{ min-width:230px; text-align:center; color:var(--kemik); }
 
+/* müzik düğmesi — ana sayfadakiyle aynı */
+.muzik-kontrol{
+  position:fixed; bottom:74px; right:24px; z-index:70;
+  display:flex; align-items:center; gap:10px;
+  background:rgba(12,11,16,.90); border:1px solid var(--tunc);
+  backdrop-filter:blur(10px); padding:9px 14px; border-radius:20px;
+  color:var(--kemik); font-family:var(--mono); font-size:11px;
+  letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,0,0,.5); transition:all .3s ease;
+}
+.muzik-kontrol:hover{ border-color:var(--cini); background:rgba(19,18,24,.98); transform:translateY(-2px); }
+.muzik-kontrol svg{ fill:var(--tunc); width:13px; height:13px; transition:fill .3s; }
+.muzik-kontrol.caliyor{ border-color:var(--cini); }
+.muzik-kontrol.caliyor svg{ fill:var(--cini); }
+
 @media (max-width:640px){
   .icerik{ font-size:12.5px; }
   .alan{ grid-template-columns:112px 1fr; }
   .elyazi{ font-size:21px; }
   .cizgili{ background-image:repeating-linear-gradient(to bottom,transparent 0 31px, rgba(36,51,73,.16) 31px 32px); }
   .alt-cubuk .ad{ min-width:120px; font-size:10px; }
+  .muzik-kontrol{ bottom:66px; right:14px; padding:7px 11px; }
 }
 @media (prefers-reduced-motion:reduce){
   .sayfa{ transition:none; }
@@ -267,12 +283,19 @@ button{ font:inherit; }
   <button id="ileri" aria-label="İleri">›</button>
 </div>
 
+<button class="muzik-kontrol" id="muzikBtn" aria-label="Müzik">
+  <svg id="muzikIkon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+  <span id="muzikMetin">Müzik</span>
+</button>
+
 <script>
 (function () {
   "use strict";
 
   var FOTO = "gorseller/dosya/kayalik.jpg";
   var SES  = "gorseller/dosya/kayit.mp3";
+  var MUZIK = "gorseller/muzik.wav";
+  var MUZIK_YEDEK = "gorseller/muzik.mp3";
   var TOPLAM = 20;
 
   /* Cevaplar her iki dilde de kabul edilir. */
@@ -284,7 +307,6 @@ button{ font:inherit; }
 
   /* ====================================================================
      İÇERİK — Türkçe ve İngilizce yan yana.
-     Bir metni değiştirirsen diğer dildekini de değiştir.
   ==================================================================== */
   var ICERIK = {
     tr: {
@@ -297,6 +319,8 @@ button{ font:inherit; }
       muhurAc: "Mührü kaldır",
       muhurHata: "Mühür kalkmadı. Dosyada eksik okuduğun bir yer var.",
       kandilNot: "Kandili fotoğrafın üzerinde gezdirin.",
+      muzikAcik: "Müzik: Açık",
+      muzikKapali: "Müzik: Kapalı",
       kilitler: [
         { etiket: "Kızın evden çıktığı saat", yer: "00:00" },
         { etiket: "Kayalıkta ayakta duran kişi sayısı", yer: "0" },
@@ -445,6 +469,8 @@ button{ font:inherit; }
       muhurAc: "Break the seal",
       muhurHata: "The seal holds. Something in the file has gone unread.",
       kandilNot: "Move the lamp across the photograph.",
+      muzikAcik: "Music: On",
+      muzikKapali: "Music: Off",
       kilitler: [
         { etiket: "Time the girl left the house", yer: "00:00" },
         { etiket: "People standing at the rocks", yer: "0" },
@@ -584,7 +610,10 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
     }
   };
 
-  /* ---------------- dil ---------------- */
+  /* ---------------- yardımcılar ---------------- */
+  function q(id) { return document.getElementById(id); }
+  function yaz(id, metin) { var e = q(id); if (e) e.textContent = metin; }
+
   function baslangicDili() {
     var p = new URLSearchParams(location.search).get("lang");
     if (p === "en" || p === "tr") return p;
@@ -600,15 +629,76 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
   var acikMi = false;
   try { acikMi = localStorage.getItem("khabir-dosya") === "acik"; } catch (e) {}
 
-  var klasor = document.getElementById("klasor");
-  var elAd = document.getElementById("sayfaAdi");
-  var btnGeri = document.getElementById("geri");
-  var btnIleri = document.getElementById("ileri");
+  var klasor = q("klasor");
+  var elAd = q("sayfaAdi");
+  var btnGeri = q("geri");
+  var btnIleri = q("ileri");
   var sayfalar = [];
   var ses = null, sesVar = true, calisiyor = false, an = 0, sonT = 0;
 
   function I() { return ICERIK[dil]; }
 
+  /* ---------------- arka plan müziği (ana sayfadan devam eder) --------- */
+  var MUZIK_ANAHTAR = "khabir-muzik";
+  var arka = null, arkaAcik = false;
+  var muzikBtn = q("muzikBtn"), muzikIkon = q("muzikIkon"), muzikMetin = q("muzikMetin");
+  var OYNA_IKON = '<path d="M8 5v14l11-7z"/>';
+  var DUR_IKON  = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+
+  function muzikOku() {
+    try { return JSON.parse(localStorage.getItem(MUZIK_ANAHTAR)); } catch (e) { return null; }
+  }
+  function muzikKaydet() {
+    try {
+      localStorage.setItem(MUZIK_ANAHTAR, JSON.stringify({
+        t: arka ? (arka.currentTime || 0) : 0,
+        c: arkaAcik
+      }));
+    } catch (e) {}
+  }
+  function muzikArayuz() {
+    if (!muzikBtn) return;
+    muzikBtn.classList.toggle("caliyor", arkaAcik);
+    muzikIkon.innerHTML = arkaAcik ? DUR_IKON : OYNA_IKON;
+    muzikMetin.textContent = arkaAcik ? I().muzikAcik : I().muzikKapali;
+  }
+  function muzikBaslat() {
+    var d = muzikOku();
+    arka = new Audio(MUZIK);
+    arka.loop = true;
+    arka.volume = 0.38;
+    arka.addEventListener("error", function () {
+      if (arka.src.indexOf(MUZIK_YEDEK) === -1) { arka.src = MUZIK_YEDEK; arka.load(); }
+    });
+    if (d && typeof d.t === "number") {
+      arka.addEventListener("loadedmetadata", function () {
+        if (d.t < (arka.duration || Infinity)) arka.currentTime = d.t;
+      }, { once: true });
+    }
+    arkaAcik = !(d && d.c === false);
+    if (arkaAcik) arka.play().catch(function () { arkaAcik = false; muzikArayuz(); });
+    muzikArayuz();
+    muzikKaydet();
+  }
+  if (muzikBtn) {
+    muzikBtn.addEventListener("click", function () {
+      if (!arka) { muzikBaslat(); return; }
+      arkaAcik = !arkaAcik;
+      if (arkaAcik) arka.play().catch(function () {}); else arka.pause();
+      muzikArayuz();
+      muzikKaydet();
+    });
+  }
+  setInterval(function () { if (arka && arkaAcik && !arka.paused) muzikKaydet(); }, 1000);
+  window.addEventListener("pagehide", muzikKaydet);
+
+  /* Kaset çalarken müzik susar, bitince geri gelir. */
+  function muzigiKis(kis) {
+    if (!arka || !arkaAcik) return;
+    if (kis) arka.pause(); else arka.play().catch(function () {});
+  }
+
+  /* ---------------- sayfaları kur ---------------- */
   function kur() {
     if (ses) ses.pause();
     calisiyor = false; an = 0;
@@ -618,6 +708,7 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
     liste.forEach(function (s, i) {
       var d = document.createElement("div");
       d.className = "sayfa";
+      d.style.zIndex = String(liste.length - i);   // sıralama en baştan garanti
       d.innerHTML =
         '<div class="yuz"><div class="icerik">' + s.html + "</div>" +
         (i < liste.length - 1 ? '<button class="kose" aria-label="→"></button>' : "") +
@@ -627,22 +718,27 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
     sayfalar = Array.prototype.slice.call(klasor.querySelectorAll(".sayfa"));
 
     document.documentElement.lang = dil;
-    document.getElementById("perdeNo").textContent = I().perdeNo;
-    document.getElementById("perdeBaslik").textContent = I().perdeBaslik;
-    document.getElementById("perdeMetin").textContent = I().perdeMetin;
-    document.getElementById("ac").textContent = I().ac;
-    document.getElementById("geriBaglanti").textContent = I().geriBaglanti;
-    document.getElementById("kandilNot").textContent = I().kandilNot;
-    document.getElementById("cozBaslik").textContent = I().cozBaslik;
-    document.getElementById("muhurAc").textContent = I().muhurAc;
-    Array.prototype.forEach.call(document.querySelectorAll(".dil button"), function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-dil") === dil ? "true" : "false");
-    });
+    diz();   // önce yerleştir, sonra parçaları kur
 
-    fotoKur();
-    kasetKur();
-    muhurKur();
-    diz();
+    try {
+      yaz("perdeNo", I().perdeNo);
+      yaz("perdeBaslik", I().perdeBaslik);
+      yaz("perdeMetin", I().perdeMetin);
+      yaz("ac", I().ac);
+      yaz("geriBaglanti", I().geriBaglanti);
+      yaz("kandilNot", I().kandilNot);
+      yaz("cozBaslik", I().cozBaslik);
+      yaz("muhurAc", I().muhurAc);
+      Array.prototype.forEach.call(document.querySelectorAll(".dil button"), function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-dil") === dil ? "true" : "false");
+      });
+      muzikArayuz();
+      fotoKur();
+      kasetKur();
+      muhurKur();
+    } catch (e) {
+      console.error("Dosya kurulum hatası:", e);
+    }
   }
 
   function diz() {
@@ -652,17 +748,20 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
       s.style.zIndex = cevrildi ? i : (sayfalar.length - i);
       s.setAttribute("aria-hidden", i === aktif ? "false" : "true");
     });
-    elAd.textContent = I().sayfalar[aktif].ad;
+    if (elAd) elAd.textContent = I().sayfalar[aktif].ad;
     btnGeri.disabled = aktif === 0;
     btnIleri.disabled = aktif === sayfalar.length - 1;
-    var ic = sayfalar[aktif].querySelector(".icerik");
+    var ic = sayfalar[aktif] && sayfalar[aktif].querySelector(".icerik");
     if (ic) ic.scrollTop = 0;
   }
   function git(n) { aktif = Math.min(sayfalar.length - 1, Math.max(0, n)); diz(); }
 
   /* ---------------- fotoğraf ---------------- */
   function fotoKur() {
-    var gizli = document.getElementById("fotoGizli");
+    var gizli = q("fotoGizli");
+    var foto = q("foto");
+    if (!gizli || !foto) return;
+
     gizli.innerHTML =
       '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">' +
         '<g stroke="rgba(236,228,205,.72)" fill="none" stroke-width="1.1">' +
@@ -679,7 +778,6 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
         '<g fill="rgba(236,228,205,.34)"><ellipse cx="200" cy="212" rx="19" ry="7"/></g>' +
       "</svg>";
 
-    var foto = document.getElementById("foto");
     function konum(e) {
       var k = foto.getBoundingClientRect();
       foto.style.setProperty("--kx", Math.max(0, Math.min(100, ((e.clientX - k.left) / k.width) * 100)) + "%");
@@ -689,29 +787,37 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
     foto.addEventListener("pointerdown", function (e) { foto.classList.add("dokunuldu"); konum(e); });
     foto.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
 
-    document.getElementById("fotoGorsel").addEventListener("error", function () {
-      this.style.display = "none";
-      var y = document.createElement("div");
-      y.className = "yedek";
-      y.innerHTML =
-        '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%">' +
-          '<rect width="400" height="300" fill="#111114"/><circle cx="322" cy="52" r="17" fill="#2A2A31"/>' +
-          '<path d="M0 214 L58 176 L104 206 L150 158 L214 202 L268 166 L330 208 L400 178 L400 300 L0 300 Z" fill="#191920"/>' +
-          '<path d="M120 300 L152 214 L188 300 Z" fill="#101014"/><path d="M232 300 L262 224 L292 300 Z" fill="#101014"/>' +
-        "</svg>";
-      foto.insertBefore(y, document.getElementById("fotoGizli"));
-    });
+    var gorsel = q("fotoGorsel");
+    if (gorsel) {
+      gorsel.addEventListener("error", function () {
+        this.style.display = "none";
+        var y = document.createElement("div");
+        y.className = "yedek";
+        y.innerHTML =
+          '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%">' +
+            '<rect width="400" height="300" fill="#111114"/><circle cx="322" cy="52" r="17" fill="#2A2A31"/>' +
+            '<path d="M0 214 L58 176 L104 206 L150 158 L214 202 L268 166 L330 208 L400 178 L400 300 L0 300 Z" fill="#191920"/>' +
+            '<path d="M120 300 L152 214 L188 300 Z" fill="#101014"/><path d="M232 300 L262 224 L292 300 Z" fill="#101014"/>' +
+          "</svg>";
+        foto.insertBefore(y, gizli);
+      });
+    }
   }
 
   /* ---------------- kaset ---------------- */
   function kasetKur() {
     var coz = I().cozumleme;
-    var kutu = document.getElementById("satirlar");
+    var kutu = q("satirlar");
+    var oynat = q("oynat"), surgu = q("surgu"), elSure = q("sure");
+    var mk1 = q("mk1"), mk2 = q("mk2");
+    if (!kutu || !oynat || !surgu) return;
+
     kutu.innerHTML = coz.map(function (c, i) {
       return '<div class="satir' + (c.kritik ? " kritik" : "") + '" data-i="' + i + '">' +
              "<b>" + c.s + "</b><span>" + c.m + "</span></div>";
     }).join("");
     var satirlar = kutu.querySelectorAll(".satir");
+    var dolgu = surgu.querySelector("i");
 
     if (!ses) {
       ses = new Audio(SES);
@@ -719,17 +825,13 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
       ses.addEventListener("error", function () { sesVar = false; });
     }
 
-    var oynat = document.getElementById("oynat");
-    var surgu = document.getElementById("surgu");
-    var dolgu = surgu.querySelector("i");
-    var elSure = document.getElementById("sure");
-    var mk1 = document.getElementById("mk1"), mk2 = document.getElementById("mk2");
-
     function guncelle() {
       dolgu.style.width = (Math.min(1, an / TOPLAM) * 100) + "%";
       var sn = Math.floor(an % 60);
       elSure.textContent = Math.floor(an / 60) + ":" + (sn < 10 ? "0" : "") + sn;
-      satirlar.forEach(function (el, i) { el.classList.toggle("acik", an >= coz[i].t); });
+      Array.prototype.forEach.call(satirlar, function (el, i) {
+        el.classList.toggle("acik", an >= coz[i].t);
+      });
     }
     function tik(z) {
       if (!calisiyor) return;
@@ -743,15 +845,19 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
       if (an >= TOPLAM) an = 0;
       calisiyor = true; sonT = 0;
       oynat.textContent = "❚❚";
-      mk1.classList.add("doner"); mk2.classList.add("doner");
+      if (mk1) mk1.classList.add("doner");
+      if (mk2) mk2.classList.add("doner");
+      muzigiKis(true);
       if (sesVar) { ses.currentTime = an; ses.play().catch(function () { sesVar = false; }); }
       requestAnimationFrame(tik);
     }
     function dur() {
       calisiyor = false;
       oynat.textContent = "▶";
-      mk1.classList.remove("doner"); mk2.classList.remove("doner");
+      if (mk1) mk1.classList.remove("doner");
+      if (mk2) mk2.classList.remove("doner");
       if (sesVar) ses.pause();
+      muzigiKis(false);
     }
     oynat.addEventListener("click", function () { calisiyor ? dur() : cal(); });
     surgu.addEventListener("click", function (e) {
@@ -769,20 +875,24 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
     return s.replace(/[^A-ZÇĞİÖŞÜ0-9]/g, "");
   }
   function muhurKur() {
-    var kutu = document.getElementById("kilitler");
+    var kutu = q("kilitler");
+    var son = q("sonSayfa");
+    var durum = q("muhurDurum");
+    var btn = q("muhurAc");
+    if (!kutu || !son || !btn) return;
+
     kutu.innerHTML = I().kilitler.map(function (k, i) {
       return '<div class="kilit" data-i="' + i + '"><label for="kl' + i + '">' + k.etiket + "</label>" +
              '<input id="kl' + i + '" type="text" autocomplete="off" spellcheck="false" placeholder="' + k.yer + '"></div>';
     }).join("");
 
-    var son = document.getElementById("sonSayfa");
-    var durum = document.getElementById("muhurDurum");
     if (acikMi) son.classList.add("acildi");
 
-    document.getElementById("muhurAc").addEventListener("click", function () {
+    btn.addEventListener("click", function () {
       var hepsi = true;
       CEVAPLAR.forEach(function (dogrular, i) {
         var k = kutu.querySelector('.kilit[data-i="' + i + '"]');
+        if (!k) { hepsi = false; return; }
         var deger = sadelestir(k.querySelector("input").value);
         var dogru = dogrular.indexOf(deger) !== -1;
         k.classList.toggle("dogru", dogru);
@@ -790,11 +900,11 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
         if (!dogru) { hepsi = false; if (deger) k.classList.add("yanlis"); }
       });
       if (hepsi) {
-        durum.textContent = "";
+        if (durum) durum.textContent = "";
         son.classList.add("acildi");
         acikMi = true;
         try { localStorage.setItem("khabir-dosya", "acik"); } catch (e) {}
-      } else {
+      } else if (durum) {
         durum.textContent = I().muhurHata;
       }
     });
@@ -820,12 +930,17 @@ DEPONENT: SERPİL — STEPMOTHER OF THE MISSING CHILD.</p>
       kur();
     });
   });
-  document.getElementById("ac").addEventListener("click", function () {
-    var p = document.getElementById("perde");
-    p.style.transition = "opacity .6s ease";
-    p.style.opacity = "0";
-    setTimeout(function () { p.remove(); }, 600);
-  });
+  var acBtn = q("ac");
+  if (acBtn) {
+    acBtn.addEventListener("click", function () {
+      muzikBaslat();
+      var p = q("perde");
+      if (!p) return;
+      p.style.transition = "opacity .6s ease";
+      p.style.opacity = "0";
+      setTimeout(function () { p.remove(); }, 600);
+    });
+  }
 
   kur();
 })();
